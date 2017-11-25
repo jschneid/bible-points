@@ -13,9 +13,11 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  username: <%= ENV['BIBLE_POINTS_DATABASE_USERNAME'] %>
+  password: <%= ENV['BIBLE_POINTS_DATABASE_PASSWORD'] %>
+  host: <%= ENV['BIBLE_POINTS_DATABASE_HOST'] %>
+  port: <%= ENV['BIBLE_POINTS_DATABASE_PORT'] %>
+#  socket: /tmp/mysql.sock
 
 development:
   <<: *default
