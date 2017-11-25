@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root to: 'homepage#index'
 
-  get 'points/:book_id/:chapter', to: 'points#edit'
+  get 'points/:book_id/:chapter', to: 'points#show'
   patch 'points/:book_id/:chapter', to: 'points#update'
 
 end

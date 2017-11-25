@@ -1,13 +1,6 @@
 class PointsController < ApplicationController
-  # GET /points/1
-  def show
-    @point = Point.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    handle_not_found
-  end
-
   # GET /points/book_id/chapter
-  def edit
+  def show
     @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
     @point = Point.new if @point.nil?
   end
