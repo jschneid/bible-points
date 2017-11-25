@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  Book: <%= @point.book_id %>
+</p>
+
+<p>
+  Chapter: <%= @point.chapter %>
+</p>
+
+<p class="point__text">
+  <%= @point.text %>
+</p>
+
+<%= link_to 'Edit', edit_point_path(@point) %> |
+<%= link_to 'Back', points_path %>
