@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20171125023154) do
   create_table "points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "book_id"
     t.integer "chapter"
-    t.string "text"
+    t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_points_on_book_id"
