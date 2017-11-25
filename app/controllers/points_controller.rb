@@ -33,7 +33,7 @@ class PointsController < ApplicationController
 
   def do_create
     @point = Point.new(point_params__create)
-    if @point.save
+    if @point.save!
       flash[:success] = 'Saved!'
       redirect_to edit_point_path @point.book_id, @point.chapter
     else
@@ -42,10 +42,7 @@ class PointsController < ApplicationController
   end
 
   def do_update
-
-    Rails.logger.info(@point.errors.messages.inspect)
-
-    if @point.update!(point_params__edit)
+    if @point.update(point_params__edit)
       flash[:success] = 'Updated!'
       redirect_to edit_point_path @point.book_id, @point.chapter
     else

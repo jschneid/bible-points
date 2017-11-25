@@ -11,3 +11,9 @@ two:
   name: Exodus
   testament: false
   chapter_count: 2
+
+revelation:
+  id: 66
+  name: Revelation
+  testament: true
+  chapter_count: 22

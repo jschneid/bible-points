@@ -20,18 +20,23 @@ class PointsControllerTest < ActionDispatch::IntegrationTest
   def test_update__edit_success
     point_params = { text: 'Revised text' }
     patch point_path(@point.book_id, @point.chapter), params: { point: point_params }
+
     assert_redirected_to edit_point_path(@point.book_id, @point.chapter)
     updated_point = Point.find_by(book_id: @point.book_id, chapter: @point.chapter)
     assert_equal 'Revised text', updated_point.text
+    assert_equal 'Updated!', flash[:success]
   end
 
   def test_update__create_success
+    point_params = { book_id: 66, chapter: 22, text: 'Revised text' }
     assert_difference('Point.count', 1) do
-      image_params = { text: 'Revised text' }
-      patch points_path, params: { point: points_params }
+      patch point_path(point_params[:book_id], point_params[:chapter]), params: { point: point_params }
     end
 
-    assert_redirected_to image_url(Image.last)
+    assert_redirected_to edit_point_path(point_params[:book_id], point_params[:chapter])
+    new_point = Point.find_by(book_id: point_params[:book_id], chapter: point_params[:chapter])
+    assert_equal 'Revised text', new_point.text
+    assert_equal 'Saved!', flash[:success]
   end
 
 end
