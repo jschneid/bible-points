@@ -1,6 +1,6 @@
 class PointsController < ApplicationController
-  # GET /points/book_id/chapter
-  def show
+  # GET /points/book_id/chapter/edit
+  def edit
     @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
     @point = Point.new if @point.nil?
   end

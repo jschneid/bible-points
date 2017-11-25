@@ -1,0 +1,24 @@
+<% content_for :title, 'Bible Points - Add/Edit Point' %>
+
+<h1>Add/Edit Point</h1>
+
+<p>
+  Book: <%= @point.book_id %>
+</p>
+
+<p>
+  Chapter: <%= @point.chapter %>
+</p>
+
+
+
+<div class="row">
+  <div class="col-md-6 col-sm-9 col-xs-12">
+    <%= simple_form_for @point do |f| %>
+        <%= f.input :text, as: :text, html: { class: 'point_text form-inline' } %>
+        <%= f.button :submit %>
+    <% end %>
+  </div>
+</div>
+
+
