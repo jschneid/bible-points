@@ -1,8 +1,17 @@
 class PointsController < ApplicationController
+
+  before_action :set_var
+
   # GET /points/book_id/chapter/edit
   def edit
-    @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
-    @point = Point.new if @point.nil?
+    if @point.nil?
+      @point = Point.new if @point.nil?
+      @point.book_id = params[:book_id]
+      @point.chapter = params[:chapter]
+
+    end
+    @book_name = Book.find_by(id: params[:book_id]).name
+
   end
 
   def new
@@ -12,7 +21,6 @@ class PointsController < ApplicationController
 
   # PATCH/PUT /points/
   def update
-    @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
     if @point.nil?
       do_create
     else
@@ -22,6 +30,11 @@ class PointsController < ApplicationController
   end
 
   private
+
+  def set_var
+    @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
+
+  end
 
   def point_params__create
     params.require(:point).permit(:book_id, :chapter, :text)

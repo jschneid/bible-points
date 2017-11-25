@@ -9,6 +9,9 @@ class PointsControllerTest < ActionDispatch::IntegrationTest
     get '/points/1/1/edit'
     assert_response :ok
     assert_select '.point_text', /In the beginning/
+    assert_equal 1, @point.book_id
+    assert_equal 1, @point.chapter
+    assert_equal 'Genesis', assigns(:book_name)
   end
 
   def test_points_path
