@@ -2,6 +2,15 @@
 
 <h1>Add/Edit Point</h1>
 
+<!-- TODO: Move this to a common application.html.erb -->
+<% flash.each do |key, value| %>
+    <div class="m-3 alert alert-<%= key %>">
+      <p>
+        <%= value %>
+      </p>
+    </div>
+<% end %>
+
 <p>
   Book: <%= @point.book_id %> - <%= @book_name %>
 </p>

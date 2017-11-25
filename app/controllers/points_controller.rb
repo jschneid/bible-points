@@ -33,35 +33,31 @@ class PointsController < ApplicationController
 
   def set_var
     @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
-
   end
 
-  def point_params__create
-    params.require(:point).permit(:book_id, :chapter, :text)
-  end
-
-  def point_params__edit
+  def point_params
     params.require(:point).permit(:text)
   end
 
   def do_create
-    @point = Point.new(point_params__create)
+    @point = Point.new(point_params)
+    @point.book_id = params[:book_id]
+    @point.chapter = params[:chapter]
     if @point.save!
       flash[:success] = 'Saved!'
-      redirect_to edit_point_path @point.book_id, @point.chapter
+      redirect_to edit_point_path(@point.book_id, @point.chapter)
     else
       render :edit, status: :bad_request
     end
   end
 
   def do_update
-    if @point.update(point_params__edit)
+    if @point.update(point_params)
       flash[:success] = 'Updated!'
       redirect_to edit_point_path @point.book_id, @point.chapter
     else
       render :edit, status: :bad_request
     end
-
   end
 
   def handle_not_found
