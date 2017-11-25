@@ -21,14 +21,14 @@ default: &default
 
 development:
   <<: *default
-  database: bible-points_development
+  database: bible_points_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: bible-points_test
+  database: bible_points_test
   username: <%= ENV['BIBLE_POINTS_DATABASE_USERNAME_TEST'] %>
   password: <%= ENV['BIBLE_POINTS_DATABASE_PASSWORD_TEST'] %>
 
@@ -53,6 +53,6 @@ test:
 #
 production:
   <<: *default
-  database: bible-points_production
-  username: bible-points
-  password: <%= ENV['BIBLE-POINTS_DATABASE_PASSWORD'] %>
+  database: bible_points_production
+  username: <%= ENV['BIBLE_POINTS_DATABASE_USERNAME_PRODUCTION'] %>
+  password: <%= ENV['BIBLE_POINTS_DATABASE_PASSWORD_PRODUCTION'] %>

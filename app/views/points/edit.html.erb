@@ -12,13 +12,10 @@
 
 
 
-<div class="row">
-  <div class="col-md-6 col-sm-9 col-xs-12">
-    <%= simple_form_for @point do |f| %>
-        <%= f.input :text, as: :text, html: { class: 'point_text form-inline' } %>
-        <%= f.button :submit %>
-    <% end %>
-  </div>
-</div>
+<%= form_for @point, url: {action: 'update'}, html: { class: 'form-inline' }, method: 'put' do |f| %>
+    <%= f.text_area :text, size: '60x12', class: 'point_text' %>
+    <%= f.submit 'Save' %>
+<% end %>
+
 
 

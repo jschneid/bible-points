@@ -5,28 +5,20 @@ class PointsController < ApplicationController
     @point = Point.new if @point.nil?
   end
 
-  # POST /points
-  def create
-    @point = Point.new(point_params)
-    if @point.save
-      flash[:success] = 'Saved!'
-      redirect_to @point
-    else
-      render :new, status: :bad_request
-    end
+  def new
+    @point = Point.new if @point.nil?
+
   end
 
-  # PATCH/PUT /points/1
+  # PATCH/PUT /points/
   def update
     @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
-    if @point.update(point_params__edit)
-      flash[:success] = 'Updated!'
-      redirect_to @point
+    if @point.nil?
+      do_create
     else
-      render :edit, status: :bad_request
+      do_update
     end
-  rescue ActiveRecord::RecordNotFound
-    handle_not_found
+
   end
 
   private
@@ -35,8 +27,31 @@ class PointsController < ApplicationController
     params.require(:point).permit(:book_id, :chapter, :text)
   end
 
-  def image_params__edit
+  def point_params__edit
     params.require(:point).permit(:text)
+  end
+
+  def do_create
+    @point = Point.new(point_params__create)
+    if @point.save
+      flash[:success] = 'Saved!'
+      redirect_to edit_point_path @point.book_id, @point.chapter
+    else
+      render :edit, status: :bad_request
+    end
+  end
+
+  def do_update
+
+    Rails.logger.info(@point.errors.messages.inspect)
+
+    if @point.update!(point_params__edit)
+      flash[:success] = 'Updated!'
+      redirect_to edit_point_path @point.book_id, @point.chapter
+    else
+      render :edit, status: :bad_request
+    end
+
   end
 
   def handle_not_found
