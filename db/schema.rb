@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20171125023154) do
   create_table "books", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.boolean "testament"
-    t.integer "chapter"
+    t.integer "chapter_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
