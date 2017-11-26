@@ -4,13 +4,13 @@ one:
   id: 1
   name: Genesis
   testament: false
-  chapter_count: 1
+  chapter_count: 50
 
 two:
   id: 2
   name: Exodus
   testament: false
-  chapter_count: 2
+  chapter_count: 40
 
 revelation:
   id: 66

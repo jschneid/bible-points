@@ -25,8 +25,23 @@ class PointsController < ApplicationController
   private
 
   def set_variables
-    @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
+
+    handle_error('Book must be an integer.') and return unless params[:book_id].is_integer?
+    handle_error('Chapter must be an integer.') and return unless params[:chapter].is_integer?
+
     @book = Book.find_by(id: params[:book_id])
+    handle_error('Book not found.') and return if @book.nil?
+
+    handle_error(@book.name + ' does not have a chapter ' + params[:chapter] + '.') and return if
+      params[:chapter].to_i < 1 || params[:chapter].to_i > @book.chapter_count
+
+    @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
+  end
+
+
+  def handle_error(message)
+    flash[:warning] = message
+    redirect_to edit_point_path 1, 1
   end
 
   def point_params

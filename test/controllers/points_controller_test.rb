@@ -14,6 +14,42 @@ class PointsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'Genesis', assigns(:book).name
   end
 
+  def test_show__book_too_low
+    get edit_point_path 0, 1
+    assert_equal 'Book not found.', flash[:warning]
+    assert_redirected_to edit_point_path 1, 1
+  end
+
+  def test_show__book_too_high
+    get edit_point_path 67, 1
+    assert_equal 'Book not found.', flash[:warning]
+    assert_redirected_to edit_point_path 1, 1
+  end
+
+  def test_show__book_not_an_integer
+    get edit_point_path 'abc', 1
+    assert_equal 'Book must be an integer.', flash[:warning]
+    assert_redirected_to edit_point_path 1, 1
+  end
+
+  def test_show__chapter_too_low
+    get edit_point_path 1, 0
+    assert_equal 'Genesis does not have a chapter 0.', flash[:warning]
+    assert_redirected_to edit_point_path 1, 1
+  end
+
+  def test_show__chapter_too_high
+    get edit_point_path 2, 41
+    assert_equal 'Exodus does not have a chapter 41.', flash[:warning]
+    assert_redirected_to edit_point_path 1, 1
+  end
+
+  def test_show__book_not_an_integer
+    get edit_point_path 1, 'abc'
+    assert_equal 'Chapter must be an integer.', flash[:warning]
+    assert_redirected_to edit_point_path 1, 1
+  end
+
   def test_update__edit_success
     point_params = { text: 'Revised text' }
     patch point_path(@point.book_id, @point.chapter), params: { point: point_params }
