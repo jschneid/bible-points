@@ -2,6 +2,11 @@ class PointsController < ApplicationController
 
   before_action :set_variables
 
+  # GET /points/book_id/chapter
+  def show
+    redirect_to edit_point_path(params[:book_id], params[:chapter])
+  end
+
   # GET /points/book_id/chapter/edit
   def edit
     if @point.nil?
@@ -11,7 +16,6 @@ class PointsController < ApplicationController
     end
   end
 
-
   # PATCH/PUT /points/
   def update
     if @point.nil?
@@ -19,13 +23,11 @@ class PointsController < ApplicationController
     else
       do_update
     end
-
   end
 
   private
 
   def set_variables
-
     handle_error('Book must be an integer.') and return unless params[:book_id].is_integer?
     handle_error('Chapter must be an integer.') and return unless params[:chapter].is_integer?
 
@@ -37,7 +39,6 @@ class PointsController < ApplicationController
 
     @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
   end
-
 
   def handle_error(message)
     flash[:warning] = message

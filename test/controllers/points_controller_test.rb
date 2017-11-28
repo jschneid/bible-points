@@ -6,6 +6,11 @@ class PointsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_show__success
+    get point_path 2, 2
+    assert_redirected_to edit_point_path(2, 2)
+  end
+
+  def test_edit__success
     get edit_point_path @point.book_id, @point.chapter
     assert_response :ok
     assert_select '.point_text', /In the beginning/
