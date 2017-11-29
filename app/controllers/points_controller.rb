@@ -1,6 +1,6 @@
 class PointsController < ApplicationController
 
-  before_action :set_variables
+  before_action :set_variables_based_on_params, :populate_present_hash
 
   # GET /points/book_id/chapter
   def show
@@ -9,11 +9,9 @@ class PointsController < ApplicationController
 
   # GET /points/book_id/chapter/edit
   def edit
-    if @point.nil?
-      @point = Point.new if @point.nil?
-      @point.book_id = params[:book_id]
-      @point.chapter = params[:chapter]
-    end
+    @point = Point.new if @point.nil?
+    @point.book_id = params[:book_id]
+    @point.chapter = params[:chapter]
   end
 
   # PATCH/PUT /points/
@@ -27,7 +25,7 @@ class PointsController < ApplicationController
 
   private
 
-  def set_variables
+  def set_variables_based_on_params
     handle_error('Book must be an integer.') and return unless params[:book_id].is_integer?
     handle_error('Chapter must be an integer.') and return unless params[:chapter].is_integer?
 
@@ -38,6 +36,10 @@ class PointsController < ApplicationController
       params[:chapter].to_i < 1 || params[:chapter].to_i > @book.chapter_count
 
     @point = Point.find_by(book_id: params[:book_id], chapter: params[:chapter])
+  end
+
+  def populate_present_hash
+    @populated_points = Point.where.not(text: [nil, '']).pluck(:book_id, :chapter)
   end
 
   def handle_error(message)

@@ -1,0 +1,18 @@
+<table class="nav-table">
+  <tbody>
+    <% Book.all.each do |book| %>
+      <tr>
+        <td>
+          <%= book.name %>
+        </td>
+        <% (1..book.chapter_count).each do |chapter| %>
+          <td>
+            <%# TODO NEXT: Fix the style not rendering as expected. Write a test to get it working. %>
+            <% point_class = populated_points.include? ([book_id: book.id, chapter: chapter]) ? '' : 'nav_absent' %>
+            <%=link_to chapter, edit_point_path(book.id, chapter), class: point_class %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

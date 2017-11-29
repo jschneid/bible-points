@@ -2,42 +2,62 @@
 
 <div class="container">
 
-  <h1>Add/Edit Point</h1>
-
-  <% flash.each do |key, value| %>
-    <div class="m-3 alert alert-<%= key %>">
-      <%= value %>
-    </div>
-  <% end %>
-
-  <p>
-    Book: <%= @book.name %> (<%= @book.id %> / 66)
-  </p>
-
-  <p>
-    Chapter: <%= @point.chapter %> / <%= @book.chapter_count %>
-  </p>
-
-
   <div class="row">
-    <%= form_for @point, url: {action: 'update'}, html: { class: '' }, method: 'put' do |f| %>
-      <div class="form-group">
-        <%= f.text_area :text, size: '60x12', class: 'point_text form-control' %>
+    <div class="col-md-6">
+
+      <div class="row">
+        <div class="col-12">
+          <h1>Add/Edit Point</h1>
+        </div>
       </div>
-      <div class="form-group">
-        <%= f.submit 'Save', class: 'form-control btn-primary' %>
+
+      <% if flash.any? %>
+        <div class="row">
+          <div class="col-12">
+            <% flash.each do |key, value| %>
+              <div class="alert alert-<%= key %>">
+                <%= value %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col-12">
+          Book: <%= @book.name %> (<%= @book.id %> / 66)
+          Chapter: <%= @point.chapter %> / <%= @book.chapter_count %>
+          <%= link_to 'NLT', "https://www.biblegateway.com/passage/?search=#{@book.name}+#{@point.chapter}&version=NLT", target: 'BibleGatewayNltTab' %>
+          <%= link_to 'NIV', "https://www.biblegateway.com/passage/?search=#{@book.name}+#{@point.chapter}&version=NIV", target: 'BibleGatewayNivTab' %>
+          </div>
       </div>
-    <% end %>
+
+      <div class="row">
+        <%= form_for @point, url: {action: 'update'}, html: { class: '' }, method: 'put' do |f| %>
+          <div class="form-group">
+            <%= f.text_area :text, size: '60x12', class: 'point_text form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.submit 'Save', class: 'form-control btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <%= link_to 'Previous', edit_point_path(@point.book_id, (@point.chapter - 1)), class: 'btn btn-secondary' if (@point.chapter >= 2) %>
+        </div>
+        <div class="col-6">
+          <%= link_to 'Next', edit_point_path(@point.book_id, (@point.chapter + 1)), class: 'btn btn-secondary' if (@point.chapter < @book.chapter_count) %>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-md-6">
+      <%= render partial: 'points_edit_nav', locals: { populated_points: @populated_points } %>
+    </div>
   </div>
 
-  <div class="row">
-    <div class="col-6">
-      <%= link_to 'Previous', edit_point_path(@point.book_id, (@point.chapter - 1)), class: 'btn btn-primary' if (@point.chapter >= 2) %>
-    </div>
-    <div class="col-6">
-      <%= link_to 'Next', edit_point_path(@point.book_id, (@point.chapter + 1)), class: 'btn btn-primary' if (@point.chapter < @book.chapter_count) %>
-    </div>
-  </div>
 
-
-</div>
+</div> <%# /container %>
