@@ -5,12 +5,12 @@
         <td>
           <%= book.name %>
         </td>
-        <% (1..book.chapter_count).each do |chapter| %>
-          <td>
+        <td>
+          <% (1..book.chapter_count).each do |chapter| %>
             <% point_class = 'nav__absent' if populated_points.exclude? ([book.id, chapter]) %>
             <%= link_to chapter, edit_point_path(book.id, chapter), class: point_class %>
-          </td>
-        <% end %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
