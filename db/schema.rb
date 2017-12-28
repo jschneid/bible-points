@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 20171125023154) do
 
-  create_table "books", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "books", force: :cascade do |t|
     t.string "name"
     t.boolean "testament"
     t.integer "chapter_count"
@@ -20,7 +23,7 @@ ActiveRecord::Schema.define(version: 20171125023154) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "points", force: :cascade do |t|
     t.bigint "book_id"
     t.integer "chapter"
     t.text "text"
