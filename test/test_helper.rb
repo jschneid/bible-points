@@ -17,6 +17,11 @@ module ActiveSupport
       assert user_authenticated?, 'User should be authenticated after a valid POST to the login form'
     end
 
+    def do_logout
+      delete logout_path
+      refute user_authenticated?, 'User should not be authenticated after a valid DELETE to the logout path'
+    end
+
     def create_registered_user(user_params)
       # Provide a password if one wasn't specified. (We'll use a hard-coded password instead
       # of a random one to avoid introducing any potential flakiness.)

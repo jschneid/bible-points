@@ -3,6 +3,10 @@ require 'test_helper'
 class PointsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @point = points(:one)
+
+    # Log a user in
+    @user = users(:user1)
+    do_login(@user.email, 'abc12345')
   end
 
   def test_show__success
@@ -77,4 +81,28 @@ class PointsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'Saved!', flash[:success]
   end
 
+  def test_show__redirect_if_anonymous
+    do_logout
+    get point_path 2, 2
+    assert_redirected_to login_url
+  end
+
+  def test_create__redirect_if_anonymous
+    do_logout
+    assert_no_difference 'Point.count' do
+      point_params = { book_id: 66, chapter: 22, text: 'Revised text' }
+      patch point_path(point_params[:book_id], point_params[:chapter]), params: { point: point_params }
+    end
+    assert_redirected_to login_url
+  end
+
+  def test_update__redirect_if_anonymous
+    do_logout
+    point_params = { text: 'Revised text' }
+    patch point_path(@point.book_id, @point.chapter), params: { point: point_params }
+
+    assert_redirected_to edit_point_path(@point.book_id, @point.chapter)
+    not_updated_point = Point.find_by(book_id: @point.book_id, chapter: @point.chapter)
+    assert_equal 'In the beginning', not_updated_point.text
+  end
 end
