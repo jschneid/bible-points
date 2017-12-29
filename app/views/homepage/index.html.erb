@@ -1,2 +1,10 @@
 <h1>Bible Points</h1>
 <p>Welcome!</p>
+
+<% if flash.any? %>
+  <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>">
+        <%= value %>
+      </div>
+  <% end %>
+<% end %>

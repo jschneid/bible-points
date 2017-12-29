@@ -1,0 +1,34 @@
+<nav class="top-nav navbar navbar-toggleable-sm navbar-light bg-faded">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse">
+    <%= link_to 'Bible Points', root_path, class: 'navbar-brand' %>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <%= link_to 'Home', root_path, class: 'nav-link', id: 'js-home-link' %>
+      </li>
+
+      <%# TODO: Add navigation to various books / readonly views here %>
+
+      <%# TODO: Maybe also add navigation to edit pages for admin user only  %>
+
+      <!--<li class="nav-item">-->
+        <%#= link_to 'Add', new_image_path, class: 'nav-link', id: 'js-add-link' %>
+      <!--</li>-->
+
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <% if logged_in? %>
+          <li class="nav-item">
+            <%= link_to 'Log Out', logout_path, method: :delete, class: 'nav-link' %>
+          </li>
+      <% else %>
+          <li class="nav-item">
+            <%= link_to 'Log In', login_path, class: 'nav-link' %>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

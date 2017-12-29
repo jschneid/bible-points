@@ -1,0 +1,8 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# There needs to be at least one record in the users table to avoid creation of subsequent users
+# running into problems related to the non-null constraints
+jon:
+  name: Valued Customer
+  email: v.customer@example.com
+  password_digest: <%= User.digest('abc12345') %>
