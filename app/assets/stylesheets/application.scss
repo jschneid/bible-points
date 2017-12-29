@@ -1,2 +1,11 @@
+/*
+*= require_self
+*= require_tree .
+*/
 @import 'bootstrap';
-@import "top-nav";
+@import 'top-nav';
+
+body
+{
+  background-color: #fff5f0;
+}
