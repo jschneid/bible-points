@@ -1,6 +1,6 @@
 class PointsController < ApplicationController
 
-  before_action :set_variables_based_on_params, :populate_present_hash
+  before_action :authorize, :set_variables_based_on_params, :populate_present_hash
 
   # GET /points/book_id/chapter
   def show
@@ -24,6 +24,12 @@ class PointsController < ApplicationController
   end
 
   private
+
+  def authorize
+    # For now, *any* authorized user has edit access. We might want to change this in the future
+    # to only allow users with some specific permission to have access.
+    redirect_to login_path if session[:user_id].nil?
+  end
 
   def set_variables_based_on_params
     handle_error('Book must be an integer.') and return unless params[:book_id].is_integer?
