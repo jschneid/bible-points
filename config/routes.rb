@@ -2,6 +2,7 @@
 Rails.application.routes.draw do
   root to: 'homepage#index'
 
+  resources :points, param: 'book_id', only: %i[show]
   resources :points, param: 'book_id/:chapter', only: %i[show edit update]
 
   match 'login', to: 'sessions#new', via: :get

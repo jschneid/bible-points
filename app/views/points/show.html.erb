@@ -1,0 +1,43 @@
+<% content_for :title, 'Bible Points - ' + @book.name %>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-6">
+
+      <div class="row">
+        <div class="col-12">
+          <h1><%= @book.name %></h1>
+        </div>
+      </div>
+
+      <% if flash.any? %>
+          <div class="row">
+            <div class="col-12">
+              <% flash.each do |key, value| %>
+                  <div class="alert alert-<%= key %>">
+                    <%= value %>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+      <% end %>
+
+
+      <div class="row">
+        <div class="col-6">
+          <%= link_to 'Previous', show_point_path(@point.book_id - 1), class: 'btn btn-secondary' if (@point.book_id >= 2) %>
+        </div>
+        <div class="col-6">
+          <%= link_to 'Next', show_point_path(@point.book_id + 1), class: 'btn btn-secondary' if (@point.book_id < @point.book_count) %>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6">
+      <%= render partial: 'points_edit_nav', locals: { populated_points: @populated_points } %>
+    </div>
+  </div>
+
+
+</div> <%# /container %>

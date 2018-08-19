@@ -4,7 +4,9 @@ class PointsController < ApplicationController
 
   # GET /points/book_id/chapter
   def show
-    redirect_to edit_point_path(params[:book_id], params[:chapter])
+    redirect_to edit_point_path(params[:book_id], params[:chapter]) if params[:chapter].present?
+
+
   end
 
   # GET /points/book_id/chapter/edit
